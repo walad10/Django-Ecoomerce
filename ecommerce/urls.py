@@ -19,6 +19,7 @@ from django.urls import path, include, re_path
 from products.views import search, all, home, single
 from carts.views import view, add_to_cart, remove_from_cart
 from orders.views import checkout
+from orders.views import orders
 from django.conf.urls.static import static
 admin.autodiscover()
 
@@ -33,6 +34,7 @@ urlpatterns = [
     re_path(r'^cart/(?P<id>\d+)/$', remove_from_cart, name='remove_from_cart'),
     re_path(r'^cart/(?P<slug>[\w-]+)/$', add_to_cart, name='add_to_cart'),
     re_path(r'checkout/$', checkout, name='checkout'),
+    re_path(r'orders/$', orders, name='user_orders'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

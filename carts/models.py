@@ -5,9 +5,9 @@ from products.models import Product, Variation
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey('Cart', null=True, blank=True,  on_delete=models.PROTECT)
+    cart = models.ForeignKey('Cart', null=True, blank=True,  on_delete=models.CASCADE)
     line_total = models.DecimalField(default=1000, max_digits=10000, decimal_places=2)
-    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
     variations = models.ManyToManyField(Variation, null=True, blank=True)
     quantity = models.IntegerField(default=1)
     notes = models.TextField(null=True, blank=True)

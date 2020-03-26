@@ -1,11 +1,67 @@
 {% extends 'base.html' %}
-{% block content %}
-<ul>
-    {% for product in products %}
-    <li>
-        {{ product.title }} {{ product.price }}
-    </li>
-    {% endfor %}
-</ul>
+{% load static %}
+{% block head_title %}
+Products ||
+{% endblock %}
 
+{% block styles %}
+.jumbotron {
+color : blue;
+}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    {% for product in products %}
+    <div class="col-sm-2">
+
+
+        <a href='{{ product.get_absolute_url }}'>{{ product.title }}</a>
+        {{ product.price }}
+        <div class="thumbnail">
+            {% if product.productimage_set.all %}
+
+                {% for item in product.productimage_set.all %}
+                {% if item.featured %}
+             <div style="
+             width:150px;
+              height:150px;
+              margin: 0 auto;">
+                 <a href='{{ product.get_absolute_url }}'>
+
+                  <div class="background_img_thumb" style='background-image:url("/media/{{ MEDIA_URL }}{{ item.image}}");'></div>
+                 </a>
+             </div>
+<!--                <img class='img-responsive' src=" media/{{ MEDIA_URL }}{{ item.image}}"/>-->
+                {% endif %}
+                {% endfor %}
+
+            {% else %}
+                 <div style="
+             width:150px;
+              height:150px;
+              margin: 0 auto;">
+                 <a href='{{ product.get_absolute_url }}'>
+
+                  <div class="background_img_thumb" style='Height: 100px;'></div>
+                 </a>
+             </div>
+            {% endif %}
+
+            <div class="caption">
+                <a href='{{ product.get_absolute_url }}'><h3>{{ product.title }}</h3></a>
+                <p>{{ product.description|truncatewords:15}}</p>
+                <p><a class="btn btn-primary" href="{{ product.get_absolute_url }}" role="button">View</a> <a
+                        class="btn btn-default" href="#" role="button">
+                    Button</a></p>
+
+            </div>
+        </div>
+    </div>
+    {% cycle "" "" "" "" "" "</div><div class='row'>" %}
+    {% endfor %}
+
+</div>
 {% endblock %}
